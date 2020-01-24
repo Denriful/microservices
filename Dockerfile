@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 RUN apt-get update
 RUN apt-get install -y mongodb-server ruby-full ruby-dev build-essential git
 RUN gem install bundler
-RUN git clone https://github.com/Artemmkin/raddit.git
+RUN git clone https://github.com/Artemmkin/reddit.git
 
 COPY mongodb.conf /etc/mongodb.conf
 COPY db_config /reddit/db_config
