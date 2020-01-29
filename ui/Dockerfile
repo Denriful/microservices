@@ -1,6 +1,6 @@
 FROM alpine:latest
-RUN apt-get update \
-    && apt-get install -y ruby-full ruby-dev build-essential \
+RUN apk update \
+    && apk add ruby-full ruby-dev build-essential \
     && gem install bundler --no-ri --no-rdoc
 
 ENV APP_HOME /app
