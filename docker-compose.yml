@@ -5,10 +5,13 @@ services:
     volumes:
       - post_db:/data/db
     networks:
-      - reddit
+      reddit:
+        aliases:
+          - post_db
+          - comment_db
   ui:
     build: ./ui
-    image: ${USERNAME}/ui:2.0
+    image: ${USERNAME}/ui:1.0
     ports:
       - 9292:9292/tcp
     networks:
