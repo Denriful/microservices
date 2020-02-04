@@ -6,9 +6,9 @@ services:
       - post_db:/data/db
     networks:
       - reddit
-    aliases:
-      - post_db
-      - comment_db
+        aliases:
+          - post_db
+          - comment_db
   ui:
     build: ./ui
     image: ${USERNAME}/ui:2.0
