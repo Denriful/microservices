@@ -9,8 +9,8 @@ RUN pip install -r requirements.txt
 
 ADD . /app
 
-#ENV POST_DATABASE_HOST post_db
-#ENV POST_DATABASE posts
+ENV POST_DATABASE_HOST post_db
+ENV POST_DATABASE posts
 
 EXPOSE  5000
 
