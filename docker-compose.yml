@@ -1,5 +1,6 @@
 version: '3.7'
 services:
+  
   post_db:
     image: mongo:3.2
     volumes:
@@ -9,6 +10,7 @@ services:
         aliases:
           - post_db
           - comment_db
+
   ui:
 #    build: ./ui
     image: ${USER_NAME}/ui
@@ -16,23 +18,40 @@ services:
       - 9292:9292/tcp
     networks:
       - reddit
+
   post:
 #    build: ./post-py
     image: ${USER_NAME}/post
     networks:
       - reddit
+
   comment:
 #    build: ./comment
     image: ${USER_NAME}/comment
     networks:
       - reddit
+
   prometheus:
     image: ${USER_NAME}/prometheus
     ports:
       - '9090:9090'
     networks:
-      - reddit 
+      - reddit
 
+  node-exporter:
+    image: prom/node-exporter:v0.15.0
+    user: root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'  
+    networks:
+      - reddit
+      
 volumes:
   post_db:
 
