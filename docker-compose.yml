@@ -18,16 +18,16 @@ services:
       - reddit
   post:
 #    build: ./post-py
-    image: ${USERNAME}/post
+    image: ${USER_NAME}/post
     networks:
       - reddit
   comment:
 #    build: ./comment
-    image: ${USERNAME}/comment
+    image: ${USER_NAME}/comment
     networks:
       - reddit
   prometheus:
-    image: ${USERNAME}/prometheus
+    image: ${USER_NAME}/prometheus
     ports:
       - '9090:9090'
     networks:
