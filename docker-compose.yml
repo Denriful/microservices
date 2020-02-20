@@ -84,6 +84,8 @@ services:
       - prometheus
     ports:
       - 3000:3000
+    networks:
+      - reddit  
           
 volumes:
   post_db:
