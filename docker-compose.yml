@@ -59,7 +59,19 @@ services:
     ports: 
       - 9001:9001
     networks:
-      - reddit    
+      - reddit   
+      
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'    
+    networks:
+      - reddit
 
 volumes:
   post_db:
