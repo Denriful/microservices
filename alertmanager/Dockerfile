@@ -1,2 +1,2 @@
 FROM prom/alertmanager
-ADD config.yml /etc/alertmanager
+ADD alertmanager.yml /etc/alertmanager
