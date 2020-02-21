@@ -1,10 +1,11 @@
 global:
   slack_api_url: 'https://hooks.slack.com/services/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'
   
-  route:
-    receiver: slack-notifications
+route:
+  receiver: slack-notifications
   
-  receivers:
-  - name: slack-notifications
-    slack_configs:
-    - channel: '#grafana_alerts_test'
+receivers:
+- name: slack-notifications
+  slack_configs:
+  - channel: '#grafana_alerts_test'
+  
