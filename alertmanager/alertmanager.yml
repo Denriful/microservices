@@ -1,5 +1,5 @@
 global:
-  slack_api_url: 'https://hooks.slack.com/services/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'
+  slack_api_url: 'https://hooks.slack.com/services/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'
   
 route:
   receiver: slack-notifications
@@ -7,5 +7,4 @@ route:
 receivers:
 - name: slack-notifications
   slack_configs:
-  - channel: '#grafana_alerts_test'
-  
+  - channel: '#grafana-test2'
