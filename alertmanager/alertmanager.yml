@@ -2,7 +2,6 @@ global:
   slack_api_url: 'https://hooks.slack.com/services/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'
   
   route:
-    group_by: [Alertname]
     receiver: slack-notifications
   
   receivers:
