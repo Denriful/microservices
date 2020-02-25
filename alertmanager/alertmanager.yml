@@ -1,6 +1,3 @@
-#global:
-#  slack_api_url: 'https://hooks.slack.com/services/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'
-  
 route:
   receiver: slack
   routes:
