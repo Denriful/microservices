@@ -2,11 +2,15 @@
 #  slack_api_url: 'https://hooks.slack.com/services/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'
   
 route:
-  receiver: slack-notifications
-  
+  receiver: slack
+  routes:
+  - match:
+      severity: critical
+    receiver: slack
 receivers:
-name: slack-notifications
-slack_configs:
-api_url: https://hooks.slack.com/services/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
-channel: '#grafana-test2'
-send_resolved: true
+- name: slack
+  slack_configs:
+  - api_url: https://hooks.slack.com/services/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
+    channel: '#grafana-test2'
+    text: " \nsummary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}"
+#  - send_resolved: true
