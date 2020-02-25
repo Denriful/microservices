@@ -10,7 +10,7 @@ route:
 receivers:
 - name: slack
   slack_configs:
-  - api_url: https://hooks.slack.com/services/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
+  - api_url: https://hooks.slack.com/services/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
     channel: '#grafana-test2'
     text: " \nsummary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}"
 #  - send_resolved: true
