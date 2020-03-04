@@ -1,0 +1,108 @@
+version: '3.7'
+services:
+  
+  post_db:
+    image: mongo:3.2
+    volumes:
+      - post_db:/data/db
+    networks:
+      reddit:
+        aliases:
+          - post_db
+          - comment_db
+
+  ui:
+#    build: ./ui
+    image: ${USER_NAME}/ui
+    ports:
+      - 9292:9292/tcp
+    networks:
+      - reddit
+
+  post:
+#    build: ./post-py
+    image: ${USER_NAME}/post
+    networks:
+      - reddit
+
+  comment:
+#    build: ./comment
+    image: ${USER_NAME}/comment
+    networks:
+      - reddit
+
+  prometheus:
+    image: ${USER_NAME}/prometheus
+    ports:
+      - '9090:9090'
+    networks:
+      - reddit
+
+  node-exporter:
+    image: prom/node-exporter:v0.15.0
+    user: root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'  
+    networks:
+      - reddit
+
+  mongodb-exporter:
+    build: ./mongo_exporter
+    command: ./mongodb_exporter-linux-amd64 -logtostderr -mongodb.uri mongodb://post_db:27017 -groups.enabled 'asserts,durability,background_flusshing,connections,extra_info,global_lock,index_counters,network,op_counters,op_counters_repl,memory,locks,metrics'
+    restart: always
+    ports: 
+      - 9001:9001
+    networks:
+      - reddit   
+      
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'    
+    networks:
+      - reddit
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    networks:
+      - reddit  
+
+  alertmanager:
+    image: ${USER_NAME}/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    ports:
+      - 9093:9093
+    networks:
+      - reddit          
+
+volumes:
+  post_db:
+  grafana_data:      
+
+#volumes:
+#  post_db:
+
+networks:
+  reddit:
+    
